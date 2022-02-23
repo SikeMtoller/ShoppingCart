@@ -1,25 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState, useContext } from "react";
+import "./App.css";
 
+import { Product } from "./interfaces/i_product";
+import List from "./components/List";
+export const ProductContext = React.createContext<any>({} as any);
 function App() {
+  const [list, SetList] = useState<Product[]>([]);
+  const [cart, setCart] = useState<Product[]>([]);
+
+  const addToCart = (id: number) => {
+    const addedItem = list.find((item) => item.id === id);
+    if (addedItem) {
+      setCart([...cart, addedItem]);
+    }
+  };
+
+  const fetchProdutcs = async () => {
+    const response = await fetch("https://fakestoreapi.com/products");
+    const users = await response.json();
+    SetList(users);
+  };
+
+  useEffect(() => {
+    fetchProdutcs();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ProductContext.Provider value={{ addToCart }}>
+      <div className="flex flex-row">
+        <main className="mt-5 ml-8 grid grid-cols-3 gap-y-5 w-8/12 ">
+          <List list={list} key={1}/>
+        </main>
+        <nav className=""></nav>
+      </div>
+    </ProductContext.Provider>
   );
 }
 

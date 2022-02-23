@@ -1,0 +1,11 @@
+.image-crop {
+    display: inline-block;
+    overflow: hidden;
+    height: 50%;
+}
+.image-crop img {
+    width: 100%;
+}
+section {
+    height: 40rem;
+}
