@@ -1,6 +1,6 @@
 import React from 'react'
-import {Product} from "../interfaces/i_product";
-import Item from "../components/Item";
+import {Product} from "../../interfaces/i_product";
+import Item from "./Item";
 interface Props {
     list: Product[];
 }
